@@ -1,7 +1,6 @@
 The repository contains a simple .vtt file parser.
 
-This parser will remove all timestamps except for when a new speaker begins talking. The only timestamps printed are the times when a new speaker begins talking. Also, it will remove all newlines from between
-lines of text when the speaker has not changed.
+This parser will remove all timestamps except for when a new speaker begins talking. The only timestamps printed are the times when a new speaker begins talking. Also, it will remove all newlines from between lines of text when the speaker has not changed.
 
 REQUIREMENTS
 
@@ -19,16 +18,25 @@ required files.
 <name_file> this is less clear. So far the only way I have found to make this work is to have the names of all speakers input into a seperate .txt file. So take all the different names from the .vtt file. 
 From my observations so far there are normally only 5 or 6 participants in these talks. The name file should be of the following form 
 
-namecode1
-namecode2
-namecode3
+namecode1  
+
+namecode2 
+
+namecode3 
+
 ect.
 
-each name must be seperated by a newline in order for this to work properly.
-out
-also the exact order in which I presented the files on the command line must be maintained. You cannot have a command line of the form ./parser <output_file_name> <transcript_file_name> <name_file>
+each name must be seperated by a newline in order for this to work properly. Names cannot all be on the same line
+
+
+Also, the exact order in which I presented the files on the command line must be maintained. You cannot have a command line of the form ./parser <output_file_name> <transcript_file_name> <name_file>
 this is an illegal command line and the script will not run as it was designed to do. 
 
-I will provide more information on operation of this script in our next meeting as a team
+BEGINING OPERATION
 
-- Gavin Lauer :)
+In order to begin utilizing this reposotory just clone it on the command line and perform the operations above as described. 
+
+I will provide more information on operation and desgin of this script in our next meeting as a team.
+
+
+Gavin Lauer :)
