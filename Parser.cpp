@@ -143,12 +143,12 @@ void Parser::parse(istream &input, ofstream &output) {
 void Parser::printSection(const string &speaker,const string &timestamp, ofstream &outFile){
 
     outFile <<"(" << timestamp << ")" << endl;
-    outFile << speaker  << ":" << endl;
+    outFile << speaker  << ": ";
 
     for(size_t i = 0; i < speakerLines[speaker].size(); ++i){
-        outFile << speakerLines[speaker][i].erase(0,1) << endl;
+        outFile << (speakerLines[speaker][i].erase(0,1)).erase(speakerLines[speaker][i].size()-1) << " ";
     }
-    outFile << endl;
+    outFile << endl << endl;
 } 
 
 void Parser::mapSpeakerInit(const string &peopleFile){

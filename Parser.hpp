@@ -7,7 +7,7 @@
 class Parser{
     private:   
 
-    std::unordered_map<std::string,std::vector<std::string>> speakerLines;
+    std::unordered_map<std::string, std::vector<std::string>> speakerLines;
     std::vector<std::string> speakers;
 
 

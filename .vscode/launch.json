@@ -10,9 +10,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/parser_debug",
             "args": [
-                "temp_transcript.vtt",
-                "temp_out.txt",
-                "peopleFile.txt"
+                "241204_1ST03_05_JC_transcript.vtt",
+                "241204_1ST03_05_GL_formatted.txt",
+                "namefile.txt"
 
             ],
             "stopAtEntry": false,
