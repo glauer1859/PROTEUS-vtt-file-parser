@@ -13,56 +13,6 @@ bool Parser::validSpeaker(const string & speaker){
     return found; 
 }
 
-/* void Parser::parse(istream &input, const string &output){
-    //throw away the leading input lines
-    string introLine;
-    input >> introLine;
-    getline(input,introLine);
-
-    string prevLineSpeaker;
-
-    // holds the timestamp of when the current speaker started talking
-    string startSpeakingStamp;
-
-    // processing the rest of the file
-    while(!input.eof()){
-        string lineNumber;
-        string speaker;
-        string lineText;
-        string newStamp;
-
-        // get rid of original line number
-        getline(input,lineNumber);
-
-        // read in when person starts speaking
-        input >> newStamp;
-
-        // remove second time stamp
-        getline(input,lineNumber);
-
-        // takes in the speaker string
-        getline(input,speaker,':');
-
-        // gets the spoken line text
-        getline(input,lineText);
-
-        if((speaker == prevLineSpeaker)){
-            speakerLines[speaker].push_back(lineText);
-        }
-        else{
-            printSection(prevLineSpeaker,startSpeakingStamp,output);
-            speakerLines[prevLineSpeaker].clear();
-            // update the previousLineSpeaker
-            prevLineSpeaker = speaker;
-            startSpeakingStamp = newStamp;
-        }
-
-    }
-
-
-
-}*/
-
 void Parser::parse(istream &input, ofstream &output) {
     // throw away the leading input lines
     string introLine;
