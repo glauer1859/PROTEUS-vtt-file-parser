@@ -1,0 +1,171 @@
+#include "Parser.hpp"
+#include <getopt.h>
+#include <algorithm>
+#include <filesystem>
+
+using namespace std;
+
+struct CmdOptions{
+    string inFilename = "";
+    bool manual = false;
+
+};
+
+void printHelp(){
+    cout << ".VTT file parsing app\n"
+    << "Usage: ./parser [options]\n"
+    << "Options:\n"
+    << "  -h, --help                       Display this help message\n"
+    << "  -m, --manual <.vtt_filename>     Registration file for bank accounts\n"
+    << "  -a, --auto                       Automatically parse all files present in designated folder\n";
+    exit(0);
+}
+
+
+// function to parse command line options 
+void getMode(int argc, char * argv[],CmdOptions &cmdOptions) {
+  opterr = false; // Let us handle all error output for command line options
+  int choice;
+  int index = 0;  
+
+  option long_options[] = {
+    {"help"    ,         no_argument,       nullptr, 'h' },
+    {"manual"  ,         required_argument, nullptr, 'm' },
+    {"auto"    ,         no_argument,       nullptr, 'a' },
+    { nullptr, 0,                           nullptr, '\0'},
+  };  // long_options[]
+
+
+    bool fileFlag = false;
+  
+  while ((choice = getopt_long(argc, argv, "hm:a", long_options, &index)) != -1) {
+    switch (choice) {
+      case 'a': {
+        cmdOptions.manual = false;
+        cout << "mode a\n";
+        continue;
+      }
+
+      case 'm': {
+        cmdOptions.manual = true;
+        cmdOptions.inFilename = argv[2];
+        fileFlag = true;
+        cout << "mode m\n";
+        continue;
+      }
+
+      case 'h':{
+        printHelp();
+        exit(0);
+        continue;
+      }
+
+      default:
+        cerr << "Registration file failed to open.\n";
+        exit(1);
+    }  // switch ..choice
+
+        // if no file name is specified then exit cannot run program
+    if((fileFlag == false) || (cmdOptions.inFilename =="")){
+        cerr << ".vtt file failed to open. Please try again with proper file. ";
+        exit(1);
+    }
+
+  }  // while loop
+}  // getMode()
+
+
+// function to get file info from directory
+namespace fs = std::filesystem;
+
+void getDirectoryInfo(const std::string &directoryPath, vector<string> &filePaths, vector<string> &fileNames, size_t &numFiles){
+    filePaths.clear();
+    fileNames.clear();
+        
+    // Check if directory exists
+    if (!fs::exists(directoryPath) || !fs::is_directory(directoryPath)) {
+        std::cerr << "Error: Directory does not exist or is not a directory." << std::endl;
+        exit(0);
+    }
+    
+    // Iterate through directory
+    for (const auto& entry : fs::directory_iterator(directoryPath)) {
+        if (fs::is_regular_file(entry.path())) {
+            filePaths.push_back(entry.path().string());
+            fileNames.push_back(changeFileExtension(entry.path().filename().string()));
+        }
+    }
+    
+    numFiles = filePaths.size();
+}
+
+string changeFileExtension(const string &fileName, const string &oldExt, const string &newExt) {
+    string newName = fileName;
+    size_t pos = newName.rfind(oldExt);
+    
+    if (pos != string::npos) {
+        newName.replace(pos, oldExt.length(), newExt);
+    }
+    
+    return newName;
+}
+
+
+int main(int argc, char* argv[]){
+    CmdOptions long_options;
+    getMode(argc,argv,long_options);
+
+
+    if(long_options.manual == true){
+    Parser parser;
+
+    ifstream file(long_options.inFilename);
+
+    string outFilename = changeFileExtension(long_options.inFilename,".vtt",".txt");
+
+    ofstream outFile(outFilename);
+
+    parser.parse(file,outFile);
+    
+    }
+    else{
+        vector<string> fileNames;
+        vector<string> filePaths;
+        size_t numFiles; 
+
+        string directoryName;
+        cout << "Enter file directory name: ";
+        cin >> directoryName;
+
+        getDirectoryInfo(directoryName,filePaths,fileNames,numFiles);
+
+        if(numFiles == 0){
+            cerr << "Error: Given directory contains no files \n";
+            exit(0);
+        }
+        
+        cout << "Found " << numFiles << " files"<< endl;
+
+        for(size_t idx = 0; idx < numFiles; ++idx){
+            Parser parser;
+
+            ifstream file(filePaths[idx]);
+
+            if (!file) {
+                cerr << "Error: Could not open file " << filePaths[idx] << endl;
+                continue;
+            }
+
+            string outFilename = changeFileExtension(filePaths[idx], ".vtt", ".txt");
+                
+            ofstream outFile(outFilename);
+
+            cout << filePaths[idx] << endl;
+            //parser.parse(file,outfile);
+        }
+
+
+    }
+
+    return 0;
+}

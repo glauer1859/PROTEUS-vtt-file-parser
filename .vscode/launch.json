@@ -10,9 +10,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/parser_debug",
             "args": [
-                "241204_1ST03_05_JC_transcript.vtt",
-                "241204_1ST03_05_GL_formatted.txt",
-                "namefile.txt"
+                "-m",
+                "241204_1ST03_05_JC_transcript.vtt"
 
             ],
             "stopAtEntry": false,
