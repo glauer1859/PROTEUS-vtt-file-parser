@@ -22,7 +22,7 @@ void printHelp(){
     << "Usage: ./parser [options]\n"
     << "Options:\n"
     << "  -h, --help                       Display this help message\n"
-    << "  -m, --manual <.vtt_filename>     Registration file for bank accounts\n"
+    << "  -m, --manual <.vtt_filename>     process only the singular file presented and adds to specified directory\n"
     << "  -a, --auto                       Automatically parse all files present in designated folder\n"
     << "  -o, --output <directory>         Specify output directory for parsed files (default: 'output')\n";
     exit(0);
